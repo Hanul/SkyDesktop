@@ -1,4 +1,4 @@
-Yogurt.File = CLASS({
+SkyDesktop.File = CLASS({
 
 	preset : () => {
 		return UUI.BUTTON_H;

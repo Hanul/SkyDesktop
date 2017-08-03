@@ -7,10 +7,17 @@ SkyDesktopShowcase.Home = CLASS({
 	init : (inner, self) => {
 
 		let wrapper = DIV({
-			c : SkyDesktop.VerticalTabGroup({
+			style : {
+				position : 'absolute',
+				width : '100%',
+				height : '100%'
+			},
+			c : SkyDesktop.HorizontalTabGroup({
 				tabs : [SkyDesktop.Tab({
+					size : 100,
 					c : 'test1'
 				}), SkyDesktop.Tab({
+					size : 20,
 					c : 'test2'
 				})]
 			})

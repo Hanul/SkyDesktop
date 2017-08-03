@@ -1,4 +1,4 @@
-Yogurt.Folder = CLASS({
+SkyDesktop.Folder = CLASS({
 
 	preset : () => {
 		return UUI.BUTTON_H;
