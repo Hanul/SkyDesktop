@@ -15,7 +15,7 @@ SkyDesktop.ToolbarButton = CLASS({
 			on : {
 				mouseover : (e, self) => {
 					self.addStyle({
-						backgroundColor : '#003333'
+						backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#003333' : '#AFCEFF'
 					});
 				},
 				mouseout : (e, self) => {

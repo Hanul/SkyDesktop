@@ -48,7 +48,7 @@ SkyDesktop.TabGroup = CLASS({
 						if (activeTabIndex !== tabIndex) {
 							
 							tabTitle.addStyle({
-								backgroundColor : '#003333'
+								backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#003333' : '#AFCEFF'
 							});
 						}
 					},

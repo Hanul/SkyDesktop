@@ -8,7 +8,8 @@ SkyDesktop.Toolbar = CLASS({
 		
 		return {
 			style : {
-				backgroundColor : '#666',
+				backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#666' : '#ccc',
+				color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#fff' : '#000',
 				height : '100%',
 				borderBottom : '1px solid #999'
 			}

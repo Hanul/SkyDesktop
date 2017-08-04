@@ -4,7 +4,8 @@ BOOT({
 	CONFIG : {
 		defaultBoxName : 'SkyDesktopShowcase',
 		isDevMode : true,
-		webServerPort : 8802
+		webServerPort : 8802,
+		title : 'SkyDesktop Showcase'
 	},
 	BROWSER_CONFIG : {
 		SkyDesktop : {
