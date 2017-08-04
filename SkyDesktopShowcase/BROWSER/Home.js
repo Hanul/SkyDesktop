@@ -5,7 +5,7 @@ SkyDesktopShowcase.Home = CLASS({
 	},
 
 	init : (inner, self) => {
-
+		
 		let wrapper = TABLE({
 			style : {
 				position : 'absolute',
@@ -15,16 +15,40 @@ SkyDesktopShowcase.Home = CLASS({
 			c : [TR({
 				c : TD({
 					style : {
-						backgroundColor : '#666',
-						height : 20
+						height : 28
 					},
-					c : DIV({
-						c : 'test'
+					c : SkyDesktop.Toolbar({
+						buttons : [SkyDesktop.ToolbarButton({
+							icon : IMG({
+								src : SkyDesktopShowcase.R('disk.png')
+							}),
+							title : '저장'
+						}), SkyDesktop.ToolbarButton({
+							icon : IMG({
+								src : SkyDesktopShowcase.R('disk.png')
+							}),
+							title : '저장'
+						}), SkyDesktop.ToolbarButton({
+							icon : IMG({
+								src : SkyDesktopShowcase.R('disk.png')
+							}),
+							title : '저장'
+						}), SkyDesktop.ToolbarButton({
+							icon : IMG({
+								src : SkyDesktopShowcase.R('disk.png')
+							}),
+							title : '저장'
+						}), SkyDesktop.ToolbarButton({
+							icon : IMG({
+								src : SkyDesktopShowcase.R('disk.png')
+							}),
+							title : '저장'
+						})]
 					})
 				})
 			}), TR({
 				c : TD({
-					c : SkyDesktop.HorizontalTabGroup({
+					c : SkyDesktop.HorizontalTabList({
 						tabs : [SkyDesktop.Tab({
 							size : 23,
 							c : SkyDesktop.FileTree({
@@ -33,14 +57,14 @@ SkyDesktopShowcase.Home = CLASS({
 										icon : IMG({
 											src : SkyDesktopShowcase.R('home.png')
 										}),
-										title : 'File 1'
+										title : '파일 1'
 									}),
 									2 : SkyDesktop.Folder({
-										title : 'Folder 1',
+										title : '폴더 1',
 										isOpened : true,
 										items : {
 											1 : SkyDesktop.File({
-												title : 'File 2'
+												title : '파일 2'
 											})
 										}
 									})
@@ -48,7 +72,21 @@ SkyDesktopShowcase.Home = CLASS({
 							})
 						}), SkyDesktop.Tab({
 							size : 77,
-							c : 'test2'
+							c : SkyDesktop.TabGroup({
+								tabs : [SkyDesktop.Tab({
+									icon : IMG({
+										src : SkyDesktopShowcase.R('home.png')
+									}),
+									title : 'Test 1',
+									c : 'This is Test 1 Tab.'
+								}), SkyDesktop.Tab({
+									icon : IMG({
+										src : SkyDesktopShowcase.R('home.png')
+									}),
+									title : 'Test 2',
+									c : 'This is Test 2 Tab.'
+								})]
+							})
 						})]
 					})
 				})

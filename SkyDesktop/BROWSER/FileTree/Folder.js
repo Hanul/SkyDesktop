@@ -8,7 +8,7 @@ SkyDesktop.Folder = CLASS({
 		
 		return {
 			style : {
-				padding : 5,
+				padding : '5px 8px',
 				cursor : 'default'
 			},
 			listStyle : {

@@ -1,4 +1,4 @@
-SkyDesktop.VerticalTabGroup = CLASS({
+SkyDesktop.VerticalTabList = CLASS({
 	
 	preset : () => {
 		return DIV;

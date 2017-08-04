@@ -1,4 +1,4 @@
-SkyDesktop.HorizontalTabGroup = CLASS({
+SkyDesktop.HorizontalTabList = CLASS({
 	
 	preset : () => {
 		return DIV;
