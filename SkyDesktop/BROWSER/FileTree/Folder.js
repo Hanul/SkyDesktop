@@ -8,36 +8,67 @@ SkyDesktop.Folder = CLASS({
 		
 		return {
 			style : {
+				padding : 5,
 				cursor : 'default'
 			},
 			listStyle : {
 				marginLeft : 10
+			},
+			icon : IMG({
+				src : SkyDesktop.R('folder.png')
+			}),
+			spacing : 5,
+			on : {
+				mouseover : (e, self) => {
+					self.addStyle({
+						backgroundColor : '#003333'
+					});
+				},
+				mouseout : (e, self) => {
+					self.addStyle({
+						backgroundColor : 'transparent'
+					});
+				}
 			}
 		};
 	},
 	
 	init : (inner, self, params) => {
 		//OPTIONAL: params
-		//OPTIONAL: params.c
-		//OPTIONAL: params.style
 		//OPTIONAL: params.listStyle
-		//OPTIONAL: params.on
-		//OPTIONAL: params.items
-		//OPTIONAL: params.isRequiringClearBoth
+		//OPTIONAL: params.isOpened
 		
-		let listStyle = params.listStyle;
+		let listStyle;
+		let isOpened;
+		
+		if (params !== undefined) {
+			listStyle = params.listStyle;
+			isOpened = params.isOpened;
+		}
 
 		let list = UUI.LIST({
 			style : listStyle
-		}).appendTo(self);
+		});
 		
-		list.hide();
+		self.after(list);
+		
+		let open = self.open = () => {
+			list.show();
+		};
+		
+		let close = self.close = () => {
+			list.hide();
+		};
+		
+		if (isOpened !== true) {
+			close();
+		}
 		
 		self.on('tap', () => {
 			if (list.checkIsShowing() === true) {
-				list.hide();
+				close();
 			} else {
-				list.show();
+				open();
 			}
 		});
 

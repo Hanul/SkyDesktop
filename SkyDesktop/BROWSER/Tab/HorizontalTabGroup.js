@@ -7,7 +7,8 @@ SkyDesktop.HorizontalTabGroup = CLASS({
 	params : () => {
 		return {
 			style : {
-				height : '100%'
+				height : '100%',
+				backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#333' : '#ccc'
 			}
 		};
 	},
@@ -31,6 +32,10 @@ SkyDesktop.HorizontalTabGroup = CLASS({
 				} else {
 					totalSize += tab.getSize();
 				}
+				
+				tab.addStyle({
+					width : 0
+				});
 			});
 			
 			let avgSize = totalSize / (tabs.length - noSizeCount);
@@ -83,6 +88,14 @@ SkyDesktop.HorizontalTabGroup = CLASS({
 							
 							touchmoveEvent = EVENT('touchmove', (e) => {
 								let diff = e.getLeft() - startLeft;
+								
+								if (beforeTabOriginWidth + diff < 100) {
+									diff = 100 - beforeTabOriginWidth;
+								}
+								
+								if (tabOriginWidth - diff < 100) {
+									diff = tabOriginWidth - 100;
+								}
 								
 								beforeTab.addStyle({
 									width : beforeTabOriginWidth + diff

@@ -7,7 +7,8 @@ SkyDesktop.Tab = CLASS({
 	params : () => {
 		return {
 			style : {
-				backgroundColor : '#999'
+				backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#000' : '#fff',
+				color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#fff' : '#000'
 			}
 		};
 	},
