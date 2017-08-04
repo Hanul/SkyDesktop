@@ -12,11 +12,23 @@
 
 `Folder`, `File`
 
-## Vertical Tab Group
+## Tab Group
 `Tab`
 
-## Horizontal Tab Group
+## Vertical Tab List
+`Tab`
+
+## Horizontal Tab List
 `Tab`
 
 ## Toolbar
 `ToolbarButton`
+
+## Noti
+
+
+## 라이센스
+[MIT](LICENSE)
+
+## 작성자
+[Young Jae Sim](https://github.com/Hanul)
