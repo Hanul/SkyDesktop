@@ -22,7 +22,12 @@ SkyDesktopShowcase.Home = CLASS({
 							icon : IMG({
 								src : SkyDesktopShowcase.R('disk.png')
 							}),
-							title : '저장'
+							title : '저장',
+							on : {
+								tap : () => {
+									SkyDesktop.Noti('저장하였습니다.');
+								}
+							}
 						}), SkyDesktop.ToolbarButton({
 							icon : IMG({
 								src : SkyDesktopShowcase.R('disk.png')
