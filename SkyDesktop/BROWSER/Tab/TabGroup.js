@@ -1,7 +1,7 @@
 SkyDesktop.TabGroup = CLASS({
 	
 	preset : () => {
-		return DIV;
+		return TABLE;
 	},
 	
 	params : () => {
@@ -24,7 +24,19 @@ SkyDesktop.TabGroup = CLASS({
 		
 		let clearBoth = CLEAR_BOTH();
 		
-		let tabTitleGroup = DIV().appendTo(self);
+		let tabTitleGroup;
+		TR({
+			c : tabTitleGroup = TD({
+				style : {
+					height : 26
+				}
+			})
+		}).appendTo(self);
+		
+		let content;
+		TR({
+			c : content = TD()
+		}).appendTo(self);
 		
 		let addTab = self.addTab = (tab) => {
 			
@@ -71,12 +83,15 @@ SkyDesktop.TabGroup = CLASS({
 			
 			tabTitles.push(tabTitle);
 			
-			tab.on('titlechange', () => {
-				tabTitle.empty();
-				tabTitle.append(tab.getTitle());
+			tab.on('iconchange', () => {
+				tabTitle.setIcon(tab.getIcon());
 			});
 			
-			self.append(tab);
+			tab.on('titlechange', () => {
+				tabTitle.setTitle(tab.getTitle());
+			});
+			
+			content.append(tab);
 			
 			tabs.push(tab);
 			

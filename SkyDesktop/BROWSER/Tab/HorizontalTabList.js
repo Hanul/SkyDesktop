@@ -134,8 +134,7 @@ SkyDesktop.HorizontalTabList = CLASS({
 			}
 			
 			tab.addStyle({
-				flt : 'left',
-				height : '100%'
+				flt : 'left'
 			});
 			
 			self.append(tab);
