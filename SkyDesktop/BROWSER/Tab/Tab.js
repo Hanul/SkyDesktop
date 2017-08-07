@@ -1,7 +1,7 @@
 SkyDesktop.Tab = CLASS({
 
 	preset : () => {
-		return UUI.PANEL;
+		return DIV;
 	},
 	
 	params : () => {
