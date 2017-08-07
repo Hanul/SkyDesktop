@@ -8,11 +8,11 @@ SkyDesktop.Folder = CLASS({
 		
 		return {
 			style : {
-				padding : '5px 8px',
+				padding : '2px 5px',
 				cursor : 'default'
 			},
 			listStyle : {
-				marginLeft : 10
+				marginLeft : 20
 			},
 			icon : IMG({
 				src : SkyDesktop.R('folder.png')
@@ -53,11 +53,21 @@ SkyDesktop.Folder = CLASS({
 		self.after(list);
 		
 		let open = self.open = () => {
+			
 			list.show();
+			
+			self.setIcon(IMG({
+				src : SkyDesktop.R('folder-opened.png')
+			}));
 		};
 		
 		let close = self.close = () => {
+			
 			list.hide();
+			
+			self.setIcon(IMG({
+				src : SkyDesktop.R('folder.png')
+			}));
 		};
 		
 		if (isOpened !== true) {

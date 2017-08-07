@@ -64,7 +64,49 @@ SkyDesktopShowcase.Home = CLASS({
 										}),
 										title : '파일 1'
 									}),
-									2 : SkyDesktop.Folder({
+									2 : SkyDesktop.File({
+										icon : IMG({
+											src : SkyDesktopShowcase.R('home.png')
+										}),
+										title : '파일 1'
+									}),
+									3 : SkyDesktop.File({
+										icon : IMG({
+											src : SkyDesktopShowcase.R('home.png')
+										}),
+										title : '파일 1'
+									}),
+									4 : SkyDesktop.File({
+										icon : IMG({
+											src : SkyDesktopShowcase.R('home.png')
+										}),
+										title : '파일 1'
+									}),
+									5 : SkyDesktop.File({
+										icon : IMG({
+											src : SkyDesktopShowcase.R('home.png')
+										}),
+										title : '파일 1'
+									}),
+									6 : SkyDesktop.File({
+										icon : IMG({
+											src : SkyDesktopShowcase.R('home.png')
+										}),
+										title : '파일 1'
+									}),
+									7 : SkyDesktop.File({
+										icon : IMG({
+											src : SkyDesktopShowcase.R('home.png')
+										}),
+										title : '파일 1'
+									}),
+									8 : SkyDesktop.File({
+										icon : IMG({
+											src : SkyDesktopShowcase.R('home.png')
+										}),
+										title : '파일 1'
+									}),
+									9 : SkyDesktop.Folder({
 										title : '폴더 1',
 										isOpened : true,
 										items : {
@@ -82,14 +124,18 @@ SkyDesktopShowcase.Home = CLASS({
 									icon : IMG({
 										src : SkyDesktopShowcase.R('home.png')
 									}),
-									title : 'Test 1',
+									title : '탭 1',
 									c : 'This is Test 1 Tab.'
 								}), SkyDesktop.Tab({
 									icon : IMG({
-										src : SkyDesktopShowcase.R('home.png')
+										src : SkyDesktopShowcase.R('buttons.png')
 									}),
-									title : 'Test 2',
-									c : 'This is Test 2 Tab.'
+									title : '버튼들',
+									c : [SkyDesktop.Button({
+										title : '확인'
+									}), SkyDesktop.Button({
+										title : '취소'
+									})]
 								})]
 							})
 						})]

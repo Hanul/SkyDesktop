@@ -18,6 +18,7 @@ SkyDesktop.HorizontalTabList = CLASS({
 		//OPTIONAL: params.tabs
 		
 		let tabs = [];
+		let dividers = [];
 		
 		let clearBoth = CLEAR_BOTH();
 		
@@ -34,9 +35,18 @@ SkyDesktop.HorizontalTabList = CLASS({
 				}
 				
 				tab.addStyle({
-					width : 0
+					width : 0,
+					height : 0
 				});
 			});
+			
+			EACH(dividers, (divider) => {
+				divider.addStyle({
+					height : 0
+				});
+			});
+			
+			let listHeight = self.getHeight();
 			
 			let avgSize = totalSize / (tabs.length - noSizeCount);
 			
@@ -49,7 +59,14 @@ SkyDesktop.HorizontalTabList = CLASS({
 				}
 				
 				tab.addStyle({
-					width : (self.getWidth() - (tabs.length - 1) * 10) * tab.getSize() / totalSize
+					width : (self.getWidth() - (tabs.length - 1) * 8) * tab.getSize() / totalSize,
+					height : listHeight
+				});
+			});
+			
+			EACH(dividers, (divider) => {
+				divider.addStyle({
+					height : listHeight
 				});
 			});
 		};
@@ -58,13 +75,15 @@ SkyDesktop.HorizontalTabList = CLASS({
 			
 			if (tabs.length > 0) {
 				
+				let divider;
+				
 				let beforeTab = tabs[tabs.length - 1];
 				
 				let touchmoveEvent;
 				let touchendEvent;
 				
 				// create divider.
-				self.append(DIV({
+				self.append(divider = DIV({
 					style : {
 						flt : 'left',
 						width : 8,
@@ -131,6 +150,8 @@ SkyDesktop.HorizontalTabList = CLASS({
 						}
 					}
 				}));
+				
+				dividers.push(divider);
 			}
 			
 			tab.addStyle({

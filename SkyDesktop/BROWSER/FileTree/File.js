@@ -8,7 +8,7 @@ SkyDesktop.File = CLASS({
 		
 		return {
 			style : {
-				padding : '5px 8px',
+				padding : '2px 5px',
 				cursor : 'default'
 			},
 			icon : IMG({

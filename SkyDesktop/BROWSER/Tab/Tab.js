@@ -1,13 +1,14 @@
 SkyDesktop.Tab = CLASS({
 
 	preset : () => {
-		return DIV;
+		return UUI.PANEL;
 	},
 	
 	params : () => {
 		return {
 			style : {
 				height : '100%',
+				overflow : 'auto',
 				backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#000' : '#fff',
 				color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#fff' : '#000'
 			}

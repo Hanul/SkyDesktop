@@ -28,7 +28,7 @@ SkyDesktop.TabGroup = CLASS({
 		TR({
 			c : tabTitleGroup = TD({
 				style : {
-					height : 26
+					height : 27
 				}
 			})
 		}).appendTo(self);
