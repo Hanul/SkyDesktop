@@ -76,14 +76,15 @@ SkyDesktop.TabGroup = CLASS({
 			tabs[tabIndex].remove();
 			tabs.splice(tabIndex, 1);
 			
-			if (tabIndex === activeTabIndex) {
-				if (tabIndex > 0) {
-					activeTab(tabIndex - 1);
+			if (tabIndex <= activeTabIndex) {
+				
+				if (activeTabIndex - 1 >= 0) {
+					activeTab(activeTabIndex - 1);
+				} else if (tabs.length > 0) {
+					activeTab(0);
 				} else {
-					activeTabIndex = -1
+					activeTabIndex = -1;
 				}
-			} else {
-				activeTabIndex -= 1;
 			}
 		};
 		
@@ -91,8 +92,6 @@ SkyDesktop.TabGroup = CLASS({
 			
 			let tabTitle;
 			let originColor;
-			
-			let tabIndex = tabs.length;
 			
 			tabTitleGroup.append(tabTitle = UUI.BUTTON_H({
 				style : {
@@ -120,14 +119,20 @@ SkyDesktop.TabGroup = CLASS({
 							});
 						},
 						tap : () => {
-							removeTab(tabIndex);
+							removeTab(FIND({
+								array : tabs,
+								value : tab
+							}));
 						}
 					}
 				})],
 				on : {
 					mouseover : () => {
 						
-						if (activeTabIndex !== tabIndex) {
+						if (activeTabIndex !== FIND({
+							array : tabs,
+							value : tab
+						})) {
 							
 							tabTitle.addStyle({
 								backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#003333' : '#AFCEFF'
@@ -136,7 +141,10 @@ SkyDesktop.TabGroup = CLASS({
 					},
 					mouseout : () => {
 						
-						if (activeTabIndex !== tabIndex) {
+						if (activeTabIndex !== FIND({
+							array : tabs,
+							value : tab
+						})) {
 							
 							tabTitle.addStyle({
 								backgroundColor : 'transparent'
@@ -144,7 +152,10 @@ SkyDesktop.TabGroup = CLASS({
 						}
 					},
 					tap : () => {
-						activeTab(tabIndex);
+						activeTab(FIND({
+							array : tabs,
+							value : tab
+						}));
 					}
 				}
 			}));
@@ -165,7 +176,7 @@ SkyDesktop.TabGroup = CLASS({
 			
 			tabs.push(tab);
 			
-			activeTab(tabIndex);
+			activeTab(tabs.length - 1);
 		};
 		
 		if (params !== undefined && params.tabs !== undefined) {
