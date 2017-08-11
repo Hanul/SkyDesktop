@@ -59,6 +59,8 @@ SkyDesktop.Folder = CLASS({
 			self.setIcon(IMG({
 				src : SkyDesktop.R('folder-opened.png')
 			}));
+			
+			self.fireEvent('open');
 		};
 		
 		let close = self.close = () => {
@@ -68,10 +70,16 @@ SkyDesktop.Folder = CLASS({
 			self.setIcon(IMG({
 				src : SkyDesktop.R('folder.png')
 			}));
+			
+			self.fireEvent('close');
 		};
 		
-		if (isOpened !== true) {
-			close();
+		if (isOpened === true) {
+			DELAY(() => {
+				open();
+			});
+		} else {
+			list.hide();
 		}
 		
 		self.on('tap', () => {
@@ -80,6 +88,12 @@ SkyDesktop.Folder = CLASS({
 			} else {
 				open();
 			}
+		});
+		
+		self.on('remove', () => {
+			DELAY(() => {
+				list.remove();
+			});
 		});
 
 		let addItem = self.addItem = (params) => {

@@ -132,9 +132,21 @@ SkyDesktopShowcase.Home = CLASS({
 									}),
 									title : '버튼들',
 									c : [SkyDesktop.Button({
-										title : '확인'
+										title : '확인',
+										on : {
+											tap : () => {
+												SkyDesktop.Confirm('확인하시겠습니까?', () => {
+													SkyDesktop.Alert('확인하였습니다.');
+												});
+											}
+										}
 									}), SkyDesktop.Button({
-										title : '취소'
+										title : '취소',
+										on : {
+											tap : () => {
+												SkyDesktop.Alert('취소하였습니다.');
+											}
+										}
 									})]
 								})]
 							})
