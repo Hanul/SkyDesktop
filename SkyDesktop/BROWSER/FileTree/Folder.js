@@ -45,12 +45,18 @@ SkyDesktop.Folder = CLASS({
 			listStyle = params.listStyle;
 			isOpened = params.isOpened;
 		}
+		
+		let load;
 
 		let list = UUI.LIST({
 			style : listStyle
 		});
 		
 		self.after(list);
+		
+		let setLoad = self.setLoad = (_load) => {
+			load = _load;
+		};
 		
 		let open = self.open = () => {
 			
@@ -101,8 +107,23 @@ SkyDesktop.Folder = CLASS({
 			//REQUIRED: params.key
 			//REQUIRED: params.item
 			//OPTIONAL: params.isFirst
+			
+			let key = params.key;
+			let item = params.item;
+			
+			if (item.checkIsInstanceOf(SkyDesktop.File) === true) {
+				item.on('doubletap', () => {
+					load(key);
+				});
+			}
+			
+			else if (item.checkIsInstanceOf(SkyDesktop.Folder) === true) {
+				item.setLoad(load);
+			}
 
 			list.addItem(params);
+			
+			EVENT.fireAll('resize');
 		};
 
 		if (params !== undefined && params.items !== undefined) {
