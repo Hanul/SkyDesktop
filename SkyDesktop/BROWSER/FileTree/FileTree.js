@@ -3,6 +3,15 @@ SkyDesktop.FileTree = CLASS({
 	preset : () => {
 		return UUI.LIST;
 	},
+
+	params : () => {
+		
+		return {
+			style : {
+				paddingBottom : 50
+			}
+		};
+	},
 	
 	init : (inner, self, load) => {
 		//REQUIRED: load

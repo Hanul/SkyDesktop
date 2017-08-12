@@ -8,6 +8,8 @@ SkyDesktop.Folder = CLASS({
 		
 		return {
 			style : {
+				position : 'relative',
+				marginLeft : 20,
 				padding : '2px 5px',
 				cursor : 'default'
 			},
@@ -47,7 +49,40 @@ SkyDesktop.Folder = CLASS({
 		}
 		
 		let load;
-
+		
+		let openListButton;
+		self.append(openListButton = UUI.ICON_BUTTON({
+			style : {
+				position : 'absolute',
+				left : -12,
+				top : 3,
+				color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#444' : '#ccc'
+			},
+			icon : FontAwesome.GetIcon('chevron-right'),
+			on : {
+				mouseover : (e, self) => {
+					self.addStyle({
+						color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#666' : '#999'
+					});
+					e.stop();
+				},
+				mouseout : (e, self) => {
+					self.addStyle({
+						color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#444' : '#ccc'
+					});
+					e.stop();
+				},
+				tap : (e) => {
+					if (list.checkIsShowing() === true) {
+						close();
+					} else {
+						open();
+					}
+					e.stop();
+				}
+			}
+		}));
+		
 		let list = UUI.LIST({
 			style : listStyle
 		});
@@ -66,6 +101,12 @@ SkyDesktop.Folder = CLASS({
 				src : SkyDesktop.R('folder-opened.png')
 			}));
 			
+			openListButton.setIcon(FontAwesome.GetIcon('chevron-down'));
+			openListButton.addStyle({
+				left : -14,
+				top : 1,
+			});
+			
 			self.fireEvent('open');
 		};
 		
@@ -76,6 +117,12 @@ SkyDesktop.Folder = CLASS({
 			self.setIcon(IMG({
 				src : SkyDesktop.R('folder.png')
 			}));
+			
+			openListButton.setIcon(FontAwesome.GetIcon('chevron-right'));
+			openListButton.addStyle({
+				left : -12,
+				top : 2,
+			});
 			
 			self.fireEvent('close');
 		};
@@ -88,7 +135,7 @@ SkyDesktop.Folder = CLASS({
 			list.hide();
 		}
 		
-		self.on('tap', () => {
+		self.on('doubletap', () => {
 			if (list.checkIsShowing() === true) {
 				close();
 			} else {

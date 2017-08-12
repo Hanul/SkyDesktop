@@ -107,31 +107,6 @@ SkyDesktop.TabGroup = CLASS({
 				},
 				icon : tab.getIcon(),
 				spacing : 5,
-				title : tab.checkIsCannotClose() === true ? tab.getTitle() : [tab.getTitle(), UUI.ICON_BUTTON({
-					style : {
-						marginLeft : 10,
-						color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#444' : '#ccc'
-					},
-					icon : FontAwesome.GetIcon('times'),
-					on : {
-						mouseover : (e, self) => {
-							self.addStyle({
-								color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#666' : '#999'
-							});
-						},
-						mouseout : (e, self) => {
-							self.addStyle({
-								color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#444' : '#ccc'
-							});
-						},
-						tap : () => {
-							removeTab(FIND({
-								array : tabs,
-								value : tab
-							}));
-						}
-					}
-				})],
 				on : {
 					mouseover : () => {
 						
@@ -175,14 +150,45 @@ SkyDesktop.TabGroup = CLASS({
 			});
 			
 			tab.on('titlechange', () => {
-				tabTitle.setTitle(tab.getTitle());
+				
+				tabTitle.setTitle(SPAN({
+					c : tab.checkIsCannotClose() === true ? tab.getTitle() : [tab.getTitle(), UUI.ICON_BUTTON({
+						style : {
+							marginLeft : 10,
+							color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#444' : '#ccc'
+						},
+						icon : FontAwesome.GetIcon('times'),
+						on : {
+							mouseover : (e, self) => {
+								self.addStyle({
+									color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#666' : '#999'
+								});
+							},
+							mouseout : (e, self) => {
+								self.addStyle({
+									color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#444' : '#ccc'
+								});
+							},
+							tap : () => {
+								removeTab(FIND({
+									array : tabs,
+									value : tab
+								}));
+							}
+						}
+					})]
+				}));
 			});
+			
+			tab.fireEvent('titlechange');
 			
 			content.append(tab);
 			
 			tabs.push(tab);
 			
 			activeTab(tabs.length - 1);
+			
+			EVENT.fireAll('resize');
 		};
 		
 		if (params !== undefined) {

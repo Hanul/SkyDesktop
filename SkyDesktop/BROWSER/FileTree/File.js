@@ -8,6 +8,7 @@ SkyDesktop.File = CLASS({
 		
 		return {
 			style : {
+				marginLeft : 20,
 				padding : '2px 5px',
 				cursor : 'default'
 			},
