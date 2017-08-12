@@ -8,8 +8,7 @@ SkyDesktop.Button = CLASS({
 		
 		return {
 			style : {
-				flt : 'left',
-				padding : '11px 30px',
+				padding : '11px 15px',
 				backgroundColor : '#e0e1e2',
 				color : '#333',
 				fontWeight : 'bold',

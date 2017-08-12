@@ -25,28 +25,5 @@ SkyDesktop.ToolbarButton = CLASS({
 				}
 			}
 		};
-	},
-
-	init : (inner, self, params) => {
-		//REQUIRED: params
-		//OPTIONAL: params.icon
-		//OPTIONAL: params.title
-		
-		let icon = params.icon;
-		let title = params.title;
-		
-		let hideTitle = self.hideTitle = () => {
-			icon.addStyle({
-				marginRight : 0
-			});
-			self.setTitle('');
-		};
-		
-		let showTitle = self.showTitle = () => {
-			icon.addStyle({
-				marginRight : 5
-			});
-			self.setTitle(title);
-		};
 	}
 });

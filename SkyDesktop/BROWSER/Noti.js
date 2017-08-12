@@ -4,10 +4,12 @@ SkyDesktop.Noti = METHOD({
 		
 		let panel = UUI.PANEL({
 			style : {
+				zIndex : 999,
 				position : 'fixed',
 				right : 10,
 				bottom : 10,
-				backgroundColor : '#333',
+				backgroundColor : '#FFFFCC',
+				color : '#333',
 				borderRadius : 5
 			},
 			contentStyle : {

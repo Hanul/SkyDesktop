@@ -142,6 +142,8 @@ SkyDesktop.VerticalTabList = CLASS({
 		
 		self.on('show', resizeTabsSize);
 		
+		DELAY(resizeTabsSize);
+		
 		let resizeEvent = EVENT('resize', resizeTabsSize);
 		
 		self.on('remove', () => {

@@ -8,7 +8,7 @@ SkyDesktop.Confirm = CLASS({
 		
 		return {
 			style : {
-				zIndex : 1,
+				zIndex : 999,
 				backgroundColor : '#fff',
 				color : '#333',
 				textAlign : 'center',

@@ -20,25 +20,29 @@ SkyDesktop.Toolbar = CLASS({
 		//OPTIONAL: params
 		//OPTIONAL: params.buttons
 		
-		let buttons = [];
-		
 		let clearBoth = CLEAR_BOTH();
 		
 		let resize = () => {
 			
 			let totalWidth = 0;
 			
-			EACH(buttons, (button) => {
-				button.showTitle();
+			EACH(self.getChildren(), (child) => {
+				if (child.checkIsInstanceOf(SkyDesktop.ToolbarButton) === true) {
+					child.showTitle();
+				}
 			});
 			
-			EACH(buttons, (button) => {
-				totalWidth += button.getWidth();
+			EACH(self.getChildren(), (child) => {
+				if (child.checkIsInstanceOf(SkyDesktop.ToolbarButton) === true) {
+					totalWidth += child.getWidth();
+				}
 			});
 			
 			if (self.getWidth() < totalWidth) {
-				EACH(buttons, (button) => {
-					button.hideTitle();
+				EACH(self.getChildren(), (child) => {
+					if (child.checkIsInstanceOf(SkyDesktop.ToolbarButton) === true) {
+						child.hideTitle();
+					}
 				});
 			}
 		};
@@ -47,8 +51,6 @@ SkyDesktop.Toolbar = CLASS({
 			
 			self.append(button);
 			self.append(clearBoth);
-			
-			buttons.push(button);
 			
 			resize();
 		};

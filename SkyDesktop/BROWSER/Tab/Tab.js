@@ -20,15 +20,18 @@ SkyDesktop.Tab = CLASS({
 		//OPTIONAL: params.icon
 		//OPTIONAL: params.title
 		//OPTIONAL: params.size
+		//OPTIONAL: params.isCannotClose
 		
 		let icon;
 		let title;
 		let size;
+		let isCannotClose;
 		
 		if (params !== undefined) {
 			icon = params.icon;
 			title = params.title;
 			size = params.size;
+			isCannotClose = params.isCannotClose;
 		}
 		
 		let setIcon = self.setIcon = (_icon) => {
@@ -63,6 +66,10 @@ SkyDesktop.Tab = CLASS({
 		
 		let getSize = self.getSize = () => {
 			return size;
+		};
+		
+		let checkIsCannotClose = self.checkIsCannotClose = () => {
+			return isCannotClose;
 		};
 	}
 });

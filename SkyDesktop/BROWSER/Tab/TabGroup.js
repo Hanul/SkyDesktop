@@ -17,6 +17,7 @@ SkyDesktop.TabGroup = CLASS({
 		//OPTIONAL: params
 		//OPTIONAL: params.homeTab
 		//OPTIONAL: params.tabs
+		//OPTIONAL: params.activeTabIndex
 		
 		let homeTab;
 		
@@ -68,6 +69,10 @@ SkyDesktop.TabGroup = CLASS({
 			tabs[tabIndex].show();
 		};
 		
+		let getActiveTab = self.getActiveTab = () => {
+			return tabs[activeTabIndex];
+		};
+		
 		let removeTab = self.removeTab = (tabIndex) => {
 			
 			tabTitles[tabIndex].remove();
@@ -96,12 +101,13 @@ SkyDesktop.TabGroup = CLASS({
 			tabTitleGroup.append(tabTitle = UUI.BUTTON_H({
 				style : {
 					padding : '5px 10px',
+					height : 17,
 					flt : 'left',
 					cursor : 'default'
 				},
 				icon : tab.getIcon(),
 				spacing : 5,
-				title : [tab.getTitle(), UUI.ICON_BUTTON({
+				title : tab.checkIsCannotClose() === true ? tab.getTitle() : [tab.getTitle(), UUI.ICON_BUTTON({
 					style : {
 						marginLeft : 10,
 						color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#444' : '#ccc'
@@ -179,8 +185,13 @@ SkyDesktop.TabGroup = CLASS({
 			activeTab(tabs.length - 1);
 		};
 		
-		if (params !== undefined && params.tabs !== undefined) {
-			EACH(params.tabs, addTab);
+		if (params !== undefined) {
+			if (params.tabs !== undefined) {
+				EACH(params.tabs, addTab);
+			}
+			if (params.activeTabIndex !== undefined) {
+				activeTab(params.activeTabIndex);
+			}
 		}
 	}
 });
