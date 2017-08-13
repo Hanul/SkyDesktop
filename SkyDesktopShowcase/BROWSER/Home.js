@@ -113,6 +113,19 @@ SkyDesktopShowcase.Home = CLASS({
 											1 : SkyDesktop.File({
 												title : '파일 2'
 											})
+										},
+										on : {
+											contextmenu : (e) => {
+												
+												SkyDesktop.ContextMenu({
+													e : e,
+													c : SkyDesktop.ContextMenuItem({
+														title : 'test'
+													})
+												});
+												
+												e.stop();
+											}
 										}
 									})
 								}
