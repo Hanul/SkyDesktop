@@ -93,6 +93,22 @@ SkyDesktop.TabGroup = CLASS({
 			}
 		};
 		
+		let removeAllTabs = self.removeAllTabs = () => {
+			
+			EACH(tabTitles, (tabTitle) => {
+				tabTitle.remove();
+			});
+			
+			EACH(tabs, (tab) => {
+				tab.remove();
+			});
+			
+			tabTitles = [];
+			tabs = [];
+			
+			activeTabIndex = -1;
+		};
+		
 		let addTab = self.addTab = (tab) => {
 			
 			let tabTitle;
