@@ -29,5 +29,20 @@ SkyDesktop.File = CLASS({
 				}
 			}
 		};
+	},
+	
+	init : (inner, self, params) => {
+		//OPTIONAL: params
+		//OPTIONAL: params.path
+		
+		let path;
+		
+		if (params !== undefined) {
+			path = params.path;
+		}
+		
+		let getPath = self.getPath = () => {
+			return path;
+		};
 	}
 });

@@ -39,13 +39,16 @@ SkyDesktop.Folder = CLASS({
 		//OPTIONAL: params
 		//OPTIONAL: params.listStyle
 		//OPTIONAL: params.isOpened
+		//OPTIONAL: params.path
 		
 		let listStyle;
 		let isOpened;
+		let path;
 		
 		if (params !== undefined) {
 			listStyle = params.listStyle;
 			isOpened = params.isOpened;
+			path = params.path;
 		}
 		
 		let load;
@@ -191,6 +194,10 @@ SkyDesktop.Folder = CLASS({
 
 		let removeAllItems = self.removeAllItems = () => {
 			list.removeAllItems();
+		};
+		
+		let getPath = self.getPath = () => {
+			return path;
 		};
 	}
 });
