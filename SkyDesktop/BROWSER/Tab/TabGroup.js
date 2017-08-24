@@ -73,24 +73,8 @@ SkyDesktop.TabGroup = CLASS({
 			return tabs[activeTabIndex];
 		};
 		
-		let removeTab = self.removeTab = (tabIndex) => {
-			
-			tabTitles[tabIndex].remove();
-			tabTitles.splice(tabIndex, 1);
-			
-			tabs[tabIndex].remove();
-			tabs.splice(tabIndex, 1);
-			
-			if (tabIndex <= activeTabIndex) {
-				
-				if (activeTabIndex - 1 >= 0) {
-					activeTab(activeTabIndex - 1);
-				} else if (tabs.length > 0) {
-					activeTab(0);
-				} else {
-					activeTabIndex = -1;
-				}
-			}
+		let getAllTabs = self.getAllTabs = () => {
+			return tabs;
 		};
 		
 		let removeAllTabs = self.removeAllTabs = () => {
@@ -186,10 +170,7 @@ SkyDesktop.TabGroup = CLASS({
 								});
 							},
 							tap : () => {
-								removeTab(FIND({
-									array : tabs,
-									value : tab
-								}));
+								tab.remove();
 							}
 						}
 					})]
@@ -205,6 +186,36 @@ SkyDesktop.TabGroup = CLASS({
 			activeTab(tabs.length - 1);
 			
 			EVENT.fireAll('resize');
+			
+			tab.on('remove', () => {
+				
+				let tabIndex = FIND({
+					array : tabs,
+					value : tab
+				});
+				
+				if (tabIndex !== undefined) {
+					
+					tabTitles[tabIndex].remove();
+					tabTitles.splice(tabIndex, 1);
+					
+					tabs[tabIndex].remove();
+					tabs.splice(tabIndex, 1);
+					
+					if (tabIndex <= activeTabIndex) {
+						
+						if (activeTabIndex - 1 >= 0) {
+							activeTab(activeTabIndex - 1);
+						} else if (tabs.length > 0) {
+							activeTab(0);
+						} else {
+							activeTabIndex = -1;
+						}
+					}
+				}
+				
+				tab = undefined;
+			});
 		};
 		
 		if (params !== undefined) {
