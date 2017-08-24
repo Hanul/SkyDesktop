@@ -52,6 +52,15 @@ SkyDesktop.ContextMenu = CLASS((cls) => {
 			self.on('remove', () => {
 				tapEvent.remove();
 			});
+		},
+		
+		afterInit : (inner, self) => {
+			
+			if (self.getTop() + self.getHeight() > WIN_HEIGHT()) {
+				self.addStyle({
+					top : WIN_HEIGHT() - self.getHeight()
+				});
+			}
 		}
 	};
 });

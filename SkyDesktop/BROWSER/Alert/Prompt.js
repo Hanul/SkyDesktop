@@ -67,10 +67,14 @@ SkyDesktop.Prompt = CLASS({
 		};
 	},
 
-	init : (inner, self, message) => {
-		//REQUIRED: message
+	init : (inner, self, msgOrParams) => {
+		//REQUIRED: msgOrParams
+		//REQUIRED: msgOrParams.msg
+		//REQUIRED: msgOrParams.value
 		
-		self.append(message);
+		if (CHECK_IS_DATA(msgOrParams) !== true) {
+			self.append(msgOrParams);
+		}
 		
 		self.getOkButton().on('mouseover', (e, button) => {
 			button.addStyle({
