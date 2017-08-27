@@ -19,19 +19,7 @@ SkyDesktop.Folder = CLASS({
 			icon : IMG({
 				src : SkyDesktop.R('folder.png')
 			}),
-			spacing : 5,
-			on : {
-				mouseover : (e, self) => {
-					self.addStyle({
-						backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#003333' : '#AFCEFF'
-					});
-				},
-				mouseout : (e, self) => {
-					self.addStyle({
-						backgroundColor : 'transparent'
-					});
-				}
-			}
+			spacing : 5
 		};
 	},
 	
@@ -198,6 +186,42 @@ SkyDesktop.Folder = CLASS({
 		
 		let getPath = self.getPath = () => {
 			return path;
+		};
+		
+		let isSelected;
+		
+		self.on('mouseover', (e, self) => {
+			if (isSelected !== true) {
+				self.addStyle({
+					backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#003333' : '#AFCEFF'
+				});
+			}
+		});
+		
+		self.on('mouseout', (e, self) => {
+			if (isSelected !== true) {
+				self.addStyle({
+					backgroundColor : 'transparent'
+				});
+			}
+		});
+		
+		let select = self.select = () => {
+			self.addStyle({
+				backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#17344D' : '#A2C5FF'
+			});
+			isSelected = true;
+		};
+		
+		let checkIsSelected = self.checkInSelected = () => {
+			return isSelected;
+		};
+		
+		let unselect = self.unselect = () => {
+			self.addStyle({
+				backgroundColor : 'transparent'
+			});
+			isSelected = false;
 		};
 	}
 });
