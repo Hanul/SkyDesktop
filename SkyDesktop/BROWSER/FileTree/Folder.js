@@ -174,6 +174,10 @@ SkyDesktop.Folder = CLASS({
 			});
 		}
 
+		let getAllItems = self.getAllItems = () => {
+			return list.getAllItems();
+		};
+
 		let removeItem = self.removeItem = (key) => {
 			//REQUIRED: key
 
