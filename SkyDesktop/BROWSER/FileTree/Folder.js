@@ -140,6 +140,22 @@ SkyDesktop.Folder = CLASS({
 			});
 		});
 
+		let sortItems = () => {
+			list.sortItems((a, b) => {
+				if ((a.checkIsInstanceOf(SkyDesktop.File) === true && b.checkIsInstanceOf(SkyDesktop.File) === true) || (a.checkIsInstanceOf(SkyDesktop.Folder) === true && b.checkIsInstanceOf(SkyDesktop.Folder) === true)) {
+					return a.getTitle().toLowerCase().localeCompare(b.getTitle().toLowerCase());
+				} else {
+					if (a.checkIsInstanceOf(SkyDesktop.File) === true && b.checkIsInstanceOf(SkyDesktop.Folder) === true) {
+						return 1;
+					} else if (a.checkIsInstanceOf(SkyDesktop.Folder) === true && b.checkIsInstanceOf(SkyDesktop.File) === true) {
+						return -1;
+					} else {
+						return 0;
+					}
+				}
+			});
+		};
+
 		let addItem = self.addItem = (params) => {
 			//REQUIRED: params
 			//REQUIRED: params.key
@@ -160,6 +176,7 @@ SkyDesktop.Folder = CLASS({
 			}
 
 			list.addItem(params);
+			sortItems();
 			
 			EVENT.fireAll('resize');
 		};
@@ -174,16 +191,23 @@ SkyDesktop.Folder = CLASS({
 			});
 		}
 
-		let getAllItems = self.getAllItems = () => {
-			return list.getAllItems();
+		let getItems = self.getItems = () => {
+			return list.getItems();
 		};
 
+		let getItem = self.getItem = (key) => {
+			//REQUIRED: key
+			
+			return list.getItem(key);
+		};
+		
 		let removeItem = self.removeItem = (key) => {
 			//REQUIRED: key
 
 			list.removeItem(key);
+			sortItems();
 		};
-
+		
 		let removeAllItems = self.removeAllItems = () => {
 			list.removeAllItems();
 		};
@@ -221,7 +245,7 @@ SkyDesktop.Folder = CLASS({
 			return isSelected;
 		};
 		
-		let unselect = self.unselect = () => {
+		let deselect = self.deselect = () => {
 			self.addStyle({
 				backgroundColor : 'transparent'
 			});

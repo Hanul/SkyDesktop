@@ -15,6 +15,22 @@ SkyDesktop.FileTree = CLASS({
 	
 	init : (inner, self, load) => {
 		//REQUIRED: load
+
+		let sortItems = () => {
+			self.sortItems((a, b) => {
+				if ((a.checkIsInstanceOf(SkyDesktop.File) === true && b.checkIsInstanceOf(SkyDesktop.File) === true) || (a.checkIsInstanceOf(SkyDesktop.Folder) === true && b.checkIsInstanceOf(SkyDesktop.Folder) === true)) {
+					return a.getTitle().toLowerCase().localeCompare(b.getTitle().toLowerCase());
+				} else {
+					if (a.checkIsInstanceOf(SkyDesktop.File) === true && b.checkIsInstanceOf(SkyDesktop.Folder) === true) {
+						return 1;
+					} else if (a.checkIsInstanceOf(SkyDesktop.Folder) === true && b.checkIsInstanceOf(SkyDesktop.File) === true) {
+						return -1;
+					} else {
+						return 0;
+					}
+				}
+			});
+		};
 		
 		let addItem;
 		OVERRIDE(self.addItem, (origin) => {
@@ -39,8 +55,20 @@ SkyDesktop.FileTree = CLASS({
 				}
 				
 				origin(params);
+				sortItems();
 				
 				EVENT.fireAll('resize');
+			};
+		});
+		
+		let removeItem;
+		OVERRIDE(self.removeItem, (origin) => {
+			
+			removeItem = self.removeItem = (key) => {
+				//REQUIRED: key
+				
+				origin(key);
+				sortItems();
 			};
 		});
 	}

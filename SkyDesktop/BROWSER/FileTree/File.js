@@ -62,7 +62,7 @@ SkyDesktop.File = CLASS({
 			return isSelected;
 		};
 		
-		let unselect = self.unselect = () => {
+		let deselect = self.deselect = () => {
 			self.addStyle({
 				backgroundColor : 'transparent'
 			});
