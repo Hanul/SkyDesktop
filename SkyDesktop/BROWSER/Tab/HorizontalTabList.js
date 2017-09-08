@@ -73,9 +73,9 @@ SkyDesktop.HorizontalTabList = CLASS({
 		
 		let addTab = self.addTab = (tab) => {
 			
+			let divider;
+			
 			if (tabs.length > 0) {
-				
-				let divider;
 				
 				let beforeTab = tabs[tabs.length - 1];
 				
@@ -164,6 +164,29 @@ SkyDesktop.HorizontalTabList = CLASS({
 			tabs.push(tab);
 			
 			resizeTabsSize();
+			
+			tab.on('remove', () => {
+				
+				REMOVE({
+					array : tabs,
+					value : tab
+				});
+				
+				if (divider !== undefined) {
+					
+					REMOVE({
+						array : dividers,
+						value : divider
+					});
+					
+					divider.remove();
+				}
+				
+				tab = undefined;
+				divider = undefined;
+				
+				resizeTabsSize();
+			});
 		};
 		
 		if (params !== undefined && params.tabs !== undefined) {

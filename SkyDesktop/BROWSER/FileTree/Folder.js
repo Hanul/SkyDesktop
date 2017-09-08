@@ -160,7 +160,6 @@ SkyDesktop.Folder = CLASS({
 			//REQUIRED: params
 			//REQUIRED: params.key
 			//REQUIRED: params.item
-			//OPTIONAL: params.isFirst
 			
 			let key = params.key;
 			let item = params.item;

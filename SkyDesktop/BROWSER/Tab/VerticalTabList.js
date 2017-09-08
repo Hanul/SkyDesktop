@@ -54,6 +54,8 @@ SkyDesktop.VerticalTabList = CLASS({
 		
 		let addTab = self.addTab = (tab) => {
 			
+			let divider;
+			
 			if (tabs.length > 0) {
 				
 				let beforeTab = tabs[tabs.length - 1];
@@ -62,7 +64,7 @@ SkyDesktop.VerticalTabList = CLASS({
 				let touchendEvent;
 				
 				// create divider.
-				self.append(DIV({
+				self.append(divider = DIV({
 					style : {
 						height : 8,
 						cursor : 'n-resize'
@@ -134,6 +136,23 @@ SkyDesktop.VerticalTabList = CLASS({
 			tabs.push(tab);
 			
 			resizeTabsSize();
+			
+			tab.on('remove', () => {
+				
+				REMOVE({
+					array : tabs,
+					value : tab
+				});
+				
+				if (divider !== undefined) {
+					divider.remove();
+				}
+				
+				tab = undefined;
+				divider = undefined;
+				
+				resizeTabsSize();
+			});
 		};
 		
 		if (params !== undefined && params.tabs !== undefined) {
