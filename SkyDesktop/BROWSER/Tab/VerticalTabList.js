@@ -21,33 +21,36 @@ SkyDesktop.VerticalTabList = CLASS({
 		
 		let resizeTabsSize = () => {
 			
-			let totalSize = 0;
-			let noSizeCount = 0;
+			DELAY(() => {
 			
-			EACH(tabs, (tab) => {
-				if (tab.getSize() === undefined) {
-					noSizeCount += 1;
-				} else {
-					totalSize += tab.getSize();
-				}
+				let totalSize = 0;
+				let noSizeCount = 0;
 				
-				tab.addStyle({
-					height : 0
+				EACH(tabs, (tab) => {
+					if (tab.getSize() === undefined) {
+						noSizeCount += 1;
+					} else {
+						totalSize += tab.getSize();
+					}
+					
+					tab.addStyle({
+						height : 0
+					});
 				});
-			});
-			
-			let avgSize = totalSize / (tabs.length - noSizeCount);
-			
-			totalSize += avgSize * noSizeCount;
-			
-			EACH(tabs, (tab) => {
 				
-				if (tab.getSize() === undefined) {
-					tab.setSize(avgSize);
-				}
+				let avgSize = totalSize / (tabs.length - noSizeCount);
 				
-				tab.addStyle({
-					height : (self.getHeight() - (tabs.length - 1) * 10) * tab.getSize() / totalSize
+				totalSize += avgSize * noSizeCount;
+				
+				EACH(tabs, (tab) => {
+					
+					if (tab.getSize() === undefined) {
+						tab.setSize(avgSize);
+					}
+					
+					tab.addStyle({
+						height : (self.getHeight() - (tabs.length - 1) * 10) * tab.getSize() / totalSize
+					});
 				});
 			});
 		};
@@ -161,7 +164,7 @@ SkyDesktop.VerticalTabList = CLASS({
 		
 		self.on('show', resizeTabsSize);
 		
-		DELAY(resizeTabsSize);
+		resizeTabsSize();
 		
 		let resizeEvent = EVENT('resize', resizeTabsSize);
 		

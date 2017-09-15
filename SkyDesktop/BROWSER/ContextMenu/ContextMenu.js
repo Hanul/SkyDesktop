@@ -49,8 +49,15 @@ SkyDesktop.ContextMenu = CLASS((cls) => {
 				menu.remove();
 			});
 			
+			let keydownEvent = EVENT('keydown', (e) => {
+				if (e.getKey() === 'Escape') {
+					menu.remove();
+				}
+			});
+			
 			self.on('remove', () => {
 				tapEvent.remove();
+				keydownEvent.remove();
 			});
 		},
 		

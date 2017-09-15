@@ -11,7 +11,8 @@ SkyDesktop.Folder = CLASS({
 				position : 'relative',
 				marginLeft : 20,
 				padding : '2px 5px',
-				cursor : 'default'
+				cursor : 'default',
+				whiteSpace : 'nowrap'
 			},
 			listStyle : {
 				marginLeft : 20
