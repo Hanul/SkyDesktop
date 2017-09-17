@@ -40,14 +40,17 @@ SkyDesktop.FileTree = CLASS({
 				let key = params.key;
 				let item = params.item;
 				
-				if (item.checkIsInstanceOf(SkyDesktop.File) === true) {
-					item.on('doubletap', () => {
-						load(key);
-					});
-				}
-				
-				else if (item.checkIsInstanceOf(SkyDesktop.Folder) === true) {
-					item.setLoad(load);
+				if (load !== undefined) {
+					
+					if (item.checkIsInstanceOf(SkyDesktop.File) === true) {
+						item.on('doubletap', () => {
+							load(key);
+						});
+					}
+					
+					else if (item.checkIsInstanceOf(SkyDesktop.Folder) === true) {
+						item.setLoad(load);
+					}
 				}
 				
 				origin(params);
