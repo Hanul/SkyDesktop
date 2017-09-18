@@ -67,6 +67,8 @@ SkyDesktop.TabGroup = CLASS({
 			});
 			
 			tabs[tabIndex].show();
+			
+			tabs[tabIndex].fireEvent('active');
 		};
 		
 		let getActiveTab = self.getActiveTab = () => {
