@@ -75,15 +75,15 @@ SkyDesktop.TabGroup = CLASS({
 			return tabs[activeTabIndex];
 		};
 		
+		let getActiveTabIndex = self.getActiveTabIndex = () => {
+			return activeTabIndex;
+		};
+		
 		let getAllTabs = self.getAllTabs = () => {
 			return tabs;
 		};
 		
 		let removeAllTabs = self.removeAllTabs = () => {
-			
-			EACH(tabTitles, (tabTitle) => {
-				tabTitle.remove();
-			});
 			
 			EACH(tabs, (tab) => {
 				tab.remove();
@@ -139,6 +139,50 @@ SkyDesktop.TabGroup = CLASS({
 							array : tabs,
 							value : tab
 						}));
+					},
+					contextmenu : (e) => {
+						
+						let contextMenu = SkyDesktop.ContextMenu({
+							e : e,
+							c : [SkyDesktop.ContextMenuItem({
+								title : '닫기',
+								on : {
+									tap : () => {
+										
+										tab.remove();
+										
+										contextMenu.remove();
+									}
+								}
+							}), SkyDesktop.ContextMenuItem({
+								title : '나머지 모두 닫기',
+								on : {
+									tap : () => {
+										
+										let nowTab = tab;
+										EACH(tabs, (tab) => {
+											if (tab !== nowTab) {
+												tab.remove();
+											}
+										});
+										
+										contextMenu.remove();
+									}
+								}
+							}), SkyDesktop.ContextMenuItem({
+								title : '전부 닫기',
+								on : {
+									tap : () => {
+										
+										removeAllTabs();
+										
+										contextMenu.remove();
+									}
+								}
+							})]
+						});
+						
+						e.stop();
 					}
 				}
 			}));
@@ -172,7 +216,10 @@ SkyDesktop.TabGroup = CLASS({
 								});
 							},
 							tap : () => {
-								tab.remove();
+								
+								if (tab.fireEvent('close') !== false) {
+									tab.remove();
+								}
 							}
 						}
 					})]
