@@ -100,6 +100,9 @@ SkyDesktop.TabGroup = CLASS({
 			let tabTitle;
 			let originColor;
 			
+			let touchmoveEvent;
+			let touchendEvent;
+			
 			tabTitleGroup.append(tabTitle = UUI.BUTTON_H({
 				style : {
 					padding : '5px 10px',
@@ -110,6 +113,21 @@ SkyDesktop.TabGroup = CLASS({
 				icon : tab.getIcon(),
 				spacing : 5,
 				on : {
+					touchstart : () => {
+						
+						touchmoveEvent = EVENT('touchmove', (e) => {
+							console.log(e.getLeft(), e.getTop());
+						});
+						
+						touchendEvent = EVENT('touchend', () => {
+							
+							touchmoveEvent.remove();
+							touchmoveEvent = undefined;
+							
+							touchendEvent.remove();
+							touchendEvent = undefined;
+						});
+					},
 					mouseover : () => {
 						
 						if (activeTabIndex !== FIND({

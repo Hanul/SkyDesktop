@@ -148,8 +148,12 @@ SkyDesktopShowcase.Home = CLASS({
 										title : '확인',
 										on : {
 											tap : () => {
-												SkyDesktop.Confirm('확인하시겠습니까?', () => {
-													SkyDesktop.Alert('확인하였습니다.');
+												SkyDesktop.Confirm({
+													msg : '확인하시겠습니까?'
+												}, () => {
+													SkyDesktop.Alert({
+														msg : '확인하였습니다.'
+													});
 												});
 											}
 										}
@@ -157,7 +161,9 @@ SkyDesktopShowcase.Home = CLASS({
 										title : '취소',
 										on : {
 											tap : () => {
-												SkyDesktop.Alert('취소하였습니다.');
+												SkyDesktop.Alert({
+													msg : '취소하였습니다.'
+												});
 											}
 										}
 									})]
