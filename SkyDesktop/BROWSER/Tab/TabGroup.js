@@ -113,19 +113,43 @@ SkyDesktop.TabGroup = CLASS({
 				icon : tab.getIcon(),
 				spacing : 5,
 				on : {
-					touchstart : () => {
+					touchstart : (e) => {
+						e.stopDefault();
 						
 						touchmoveEvent = EVENT('touchmove', (e) => {
-							console.log(e.getLeft(), e.getTop());
+							
+							if (e.getLeft() < tabTitle.getLeft()) {
+								let prev = tabTitleGroup.getChildren()[FIND({
+									array : tabTitleGroup.getChildren(),
+									value : tabTitle
+								}) - 1];
+								if (prev !== undefined && e.getLeft() < prev.getLeft() + prev.getWidth() / 2) {
+									tabTitle.insertBefore(prev);
+								}
+							}
+							
+							if (e.getLeft() > tabTitle.getLeft() + tabTitle.getWidth()) {
+								let next = tabTitleGroup.getChildren()[FIND({
+									array : tabTitleGroup.getChildren(),
+									value : tabTitle
+								}) + 1];
+								if (next !== undefined && next.checkIsInstanceOf(CLEAR_BOTH) !== true && e.getLeft() > next.getLeft() - next.getWidth() / 2) {
+									tabTitle.insertAfter(next);
+								}
+							}
 						});
 						
 						touchendEvent = EVENT('touchend', () => {
 							
-							touchmoveEvent.remove();
-							touchmoveEvent = undefined;
+							if (touchmoveEvent !== undefined) {
+								touchmoveEvent.remove();
+								touchmoveEvent = undefined;
+							}
 							
-							touchendEvent.remove();
-							touchendEvent = undefined;
+							if (touchendEvent !== undefined) {
+								touchendEvent.remove();
+								touchendEvent = undefined;
+							}
 						});
 					},
 					mouseover : () => {
