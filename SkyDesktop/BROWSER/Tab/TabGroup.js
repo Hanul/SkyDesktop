@@ -152,6 +152,9 @@ SkyDesktop.TabGroup = CLASS({
 							}
 						});
 					},
+					doubletap : () => {
+						self.fireEvent('titledoubletap');
+					},
 					mouseover : () => {
 						
 						if (activeTabIndex !== FIND({

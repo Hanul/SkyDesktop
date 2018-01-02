@@ -6,6 +6,9 @@ SkyDesktopShowcase.Home = CLASS({
 
 	init : (inner, self) => {
 		
+		let fileList;
+		let savedFileListSize;
+		
 		let wrapper = TABLE({
 			style : {
 				position : 'absolute',
@@ -54,7 +57,7 @@ SkyDesktopShowcase.Home = CLASS({
 			}), TR({
 				c : TD({
 					c : SkyDesktop.HorizontalTabList({
-						tabs : [SkyDesktop.Tab({
+						tabs : [fileList = SkyDesktop.Tab({
 							size : 23,
 							c : SkyDesktop.FileTree({
 								items : {
@@ -133,6 +136,17 @@ SkyDesktopShowcase.Home = CLASS({
 						}), SkyDesktop.Tab({
 							size : 77,
 							c : SkyDesktop.TabGroup({
+								on : {
+									titledoubletap : () => {
+										if (savedFileListSize === undefined) {
+											savedFileListSize = fileList.getSize();
+											fileList.setSize(0);
+										} else {
+											fileList.setSize(savedFileListSize);
+											savedFileListSize = undefined;
+										}
+									}
+								},
 								tabs : [SkyDesktop.Tab({
 									icon : IMG({
 										src : SkyDesktopShowcase.R('home.png')

@@ -93,60 +93,63 @@ SkyDesktop.HorizontalTabList = CLASS({
 					on : {
 						touchstart : (e) => {
 							
-							let startLeft = e.getLeft();
-							let beforeTabOriginWidth = beforeTab.getWidth();
-							let tabOriginWidth = tab.getWidth();
-							
-							BODY.addStyle({
-								cursor : 'e-resize'
-							});
-							
-							if (touchmoveEvent !== undefined) {
-								touchmoveEvent.remove();
-							}
-							
-							touchmoveEvent = EVENT('touchmove', (e) => {
-								let diff = e.getLeft() - startLeft;
+							if (beforeTab.getSize() > 0 && tab.getSize() > 0) {
 								
-								if (beforeTabOriginWidth + diff < 100) {
-									diff = 100 - beforeTabOriginWidth;
-								}
-								
-								if (tabOriginWidth - diff < 100) {
-									diff = tabOriginWidth - 100;
-								}
-								
-								beforeTab.addStyle({
-									width : beforeTabOriginWidth + diff
-								});
-								
-								tab.addStyle({
-									width : tabOriginWidth - diff
-								});
-							});
-							
-							if (touchendEvent !== undefined) {
-								touchendEvent.remove();
-							}
-							
-							touchendEvent = EVENT('touchend', () => {
+								let startLeft = e.getLeft();
+								let beforeTabOriginWidth = beforeTab.getWidth();
+								let tabOriginWidth = tab.getWidth();
 								
 								BODY.addStyle({
-									cursor : 'auto'
+									cursor : 'e-resize'
 								});
 								
-								beforeTab.setSize(beforeTab.getSize() * beforeTab.getWidth() / beforeTabOriginWidth);
+								if (touchmoveEvent !== undefined) {
+									touchmoveEvent.remove();
+								}
 								
-								tab.setSize(tab.getSize() * tab.getWidth() / tabOriginWidth);
+								touchmoveEvent = EVENT('touchmove', (e) => {
+									let diff = e.getLeft() - startLeft;
+									
+									if (beforeTabOriginWidth + diff < 100) {
+										diff = 100 - beforeTabOriginWidth;
+									}
+									
+									if (tabOriginWidth - diff < 100) {
+										diff = tabOriginWidth - 100;
+									}
+									
+									beforeTab.addStyle({
+										width : beforeTabOriginWidth + diff
+									});
+									
+									tab.addStyle({
+										width : tabOriginWidth - diff
+									});
+								});
 								
-								touchmoveEvent.remove();
-								touchmoveEvent = undefined;
+								if (touchendEvent !== undefined) {
+									touchendEvent.remove();
+								}
 								
-								touchendEvent.remove();
-								touchendEvent = undefined;
-								
-								EVENT.fireAll('resize');
-							});
+								touchendEvent = EVENT('touchend', () => {
+									
+									BODY.addStyle({
+										cursor : 'auto'
+									});
+									
+									beforeTab.setSize(beforeTab.getSize() * beforeTab.getWidth() / beforeTabOriginWidth);
+									
+									tab.setSize(tab.getSize() * tab.getWidth() / tabOriginWidth);
+									
+									touchmoveEvent.remove();
+									touchmoveEvent = undefined;
+									
+									touchendEvent.remove();
+									touchendEvent = undefined;
+									
+									EVENT.fireAll('resize');
+								});
+							}
 							
 							e.stop();
 						}

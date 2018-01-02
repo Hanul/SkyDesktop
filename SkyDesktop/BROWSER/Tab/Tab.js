@@ -62,6 +62,8 @@ SkyDesktop.Tab = CLASS({
 			//REQUIRED: size
 			
 			size = _size;
+			
+			EVENT.fireAll('resize');
 		};
 		
 		let getSize = self.getSize = () => {
