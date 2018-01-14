@@ -85,14 +85,26 @@ SkyDesktop.TabGroup = CLASS({
 		
 		let removeAllTabs = self.removeAllTabs = () => {
 			
+			let isNotToClose = false;
+			
 			EACH(tabs, (tab) => {
-				tab.remove();
+				if (tab.fireEvent('close') === false) {
+					isNotToClose = true;
+					return false;
+				}
 			});
 			
-			tabTitles = [];
-			tabs = [];
-			
-			activeTabIndex = -1;
+			if (isNotToClose !== true) {
+				
+				EACH(tabs, (tab) => {
+					tab.remove();
+				});
+				
+				tabTitles = [];
+				tabs = [];
+				
+				activeTabIndex = -1;
+			}
 		};
 		
 		let addTab = self.addTab = (tab) => {
@@ -119,22 +131,68 @@ SkyDesktop.TabGroup = CLASS({
 						touchmoveEvent = EVENT('touchmove', (e) => {
 							
 							if (e.getLeft() < tabTitle.getLeft()) {
+								
 								let prev = tabTitleGroup.getChildren()[FIND({
 									array : tabTitleGroup.getChildren(),
 									value : tabTitle
 								}) - 1];
+								
 								if (prev !== undefined && e.getLeft() < prev.getLeft() + prev.getWidth() / 2) {
+									
+									let tabIndex = FIND({
+										array : tabTitles,
+										value : tabTitle
+									});
+									
+									let prevIndex = FIND({
+										array : tabTitles,
+										value : prev
+									});
+									
 									tabTitle.insertBefore(prev);
+									
+									let t = tabs[tabIndex];
+									tabs[tabIndex] = tabs[prevIndex];
+									tabs[prevIndex] = t;
+									
+									t = tabTitles[tabIndex];
+									tabTitles[tabIndex] = tabTitles[prevIndex];
+									tabTitles[prevIndex] = t;
+									
+									activeTab(prevIndex);
 								}
 							}
 							
 							if (e.getLeft() > tabTitle.getLeft() + tabTitle.getWidth()) {
+								
 								let next = tabTitleGroup.getChildren()[FIND({
 									array : tabTitleGroup.getChildren(),
 									value : tabTitle
 								}) + 1];
+								
 								if (next !== undefined && next.checkIsInstanceOf(CLEAR_BOTH) !== true && e.getLeft() > next.getLeft() - next.getWidth() / 2) {
+									
+									let tabIndex = FIND({
+										array : tabTitles,
+										value : tabTitle
+									});
+									
+									let nextIndex = FIND({
+										array : tabTitles,
+										value : next
+									});
+									
 									tabTitle.insertAfter(next);
+									
+									let t = tabs[tabIndex];
+									tabs[tabIndex] = tabs[nextIndex];
+									tabs[nextIndex] = t;
+									
+									t = tabTitles[tabIndex];
+									tabTitles[tabIndex] = tabTitles[nextIndex];
+									tabTitles[nextIndex] = t;
+									
+									activeTab(nextIndex);
 								}
 							}
 						});
@@ -194,7 +252,9 @@ SkyDesktop.TabGroup = CLASS({
 								on : {
 									tap : () => {
 										
-										tab.remove();
+										if (tab.fireEvent('close') !== false) {
+											tab.remove();
+										}
 										
 										contextMenu.remove();
 									}
@@ -205,11 +265,23 @@ SkyDesktop.TabGroup = CLASS({
 									tap : () => {
 										
 										let nowTab = tab;
+										let isNotToClose = false;
+										
 										EACH(tabs, (tab) => {
-											if (tab !== nowTab) {
-												tab.remove();
+											if (tab !== nowTab && tab.fireEvent('close') === false) {
+												isNotToClose = true;
+												return false;
 											}
 										});
+										
+										if (isNotToClose !== true) {
+										
+											EACH(tabs, (tab) => {
+												if (tab !== nowTab) {
+													tab.remove();
+												}
+											});
+										}
 										
 										contextMenu.remove();
 									}
