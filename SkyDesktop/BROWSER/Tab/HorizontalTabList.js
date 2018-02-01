@@ -208,5 +208,9 @@ SkyDesktop.HorizontalTabList = CLASS({
 			resizeEvent.remove();
 			resizeEvent = undefined;
 		});
+		
+		let getAllTabs = self.getAllTabs = () => {
+			return tabs;
+		};
 	}
 });
