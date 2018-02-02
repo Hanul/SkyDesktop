@@ -73,5 +73,9 @@ SkyDesktop.Tab = CLASS({
 		let checkIsCannotClose = self.checkIsCannotClose = () => {
 			return isCannotClose;
 		};
+		
+		self.on('remove', () => {
+			EVENT.fireAll('resize');
+		});
 	}
 });
