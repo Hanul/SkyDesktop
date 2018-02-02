@@ -56,13 +56,11 @@ SkyDesktop.Folder = CLASS({
 					self.addStyle({
 						color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#666' : '#999'
 					});
-					e.stop();
 				},
 				mouseout : (e, self) => {
 					self.addStyle({
 						color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#444' : '#ccc'
 					});
-					e.stop();
 				},
 				tap : (e) => {
 					if (list.checkIsShowing() === true) {
@@ -70,7 +68,6 @@ SkyDesktop.Folder = CLASS({
 					} else {
 						open();
 					}
-					e.stop();
 				}
 			}
 		}));
