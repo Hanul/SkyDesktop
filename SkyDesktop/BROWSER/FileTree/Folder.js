@@ -165,7 +165,7 @@ SkyDesktop.Folder = CLASS({
 			if (load !== undefined) {
 				
 				if (item.checkIsInstanceOf(SkyDesktop.File) === true) {
-					item.on('doubletap', () => {
+					item.on('doubletap', (e) => {
 						load(key);
 					});
 				}

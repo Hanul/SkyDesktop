@@ -128,6 +128,7 @@ SkyDesktop.TabGroup = CLASS({
 				spacing : 5,
 				on : {
 					touchstart : (e) => {
+						e.stopDefault();
 						
 						touchmoveEvent = EVENT('touchmove', (e) => {
 							
