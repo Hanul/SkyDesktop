@@ -147,6 +147,10 @@ SkyDesktop.Folder = CLASS({
 						return 1;
 					} else if (a.checkIsInstanceOf(SkyDesktop.Folder) === true && b.checkIsInstanceOf(SkyDesktop.File) === true) {
 						return -1;
+					} else if (a.checkIsInstanceOf(SkyDesktop.File) !== true && a.checkIsInstanceOf(SkyDesktop.Folder) !== true) {
+						return 1;
+					} else if (b.checkIsInstanceOf(SkyDesktop.File) !== true && b.checkIsInstanceOf(SkyDesktop.Folder) !== true) {
+						return -1;
 					} else {
 						return 0;
 					}
