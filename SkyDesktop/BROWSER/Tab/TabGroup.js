@@ -27,6 +27,7 @@ SkyDesktop.TabGroup = CLASS({
 		
 		let tabTitles = [];
 		let tabs = [];
+		let history = [];
 		
 		let activeTabIndex = -1;
 		
@@ -71,6 +72,8 @@ SkyDesktop.TabGroup = CLASS({
 			tabs[tabIndex].fireEvent('active');
 			
 			EVENT.fireAll('resize');
+			
+			history.push(tabs[tabIndex]);
 		};
 		
 		let getActiveTab = self.getActiveTab = () => {
@@ -370,7 +373,31 @@ SkyDesktop.TabGroup = CLASS({
 					tabs[tabIndex].remove();
 					tabs.splice(tabIndex, 1);
 					
-					if (tabIndex <= activeTabIndex) {
+					// 활성화된 탭이면 히스토리에서 찾기
+					if (tabIndex === activeTabIndex) {
+						
+						history.pop();
+						
+						if (history.length > 0 && FIND({
+							array : tabs,
+							value : history[history.length - 1]
+						}) !== undefined) {
+							activeTab(FIND({
+								array : tabs,
+								value : history[history.length - 1]
+							}));
+						}
+						
+						else if (activeTabIndex - 1 >= 0) {
+							activeTab(activeTabIndex - 1);
+						} else if (tabs.length > 0) {
+							activeTab(0);
+						} else {
+							activeTabIndex = -1;
+						}
+					}
+					
+					else if (tabIndex < activeTabIndex) {
 						
 						if (activeTabIndex - 1 >= 0) {
 							activeTab(activeTabIndex - 1);
@@ -381,6 +408,12 @@ SkyDesktop.TabGroup = CLASS({
 						}
 					}
 				}
+				
+				// 히스토리에서 제거
+				history.splice(FIND({
+					array : history,
+					value : tab
+				}), 1);
 				
 				tab = undefined;
 			});
