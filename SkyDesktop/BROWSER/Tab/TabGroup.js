@@ -37,7 +37,9 @@ SkyDesktop.TabGroup = CLASS({
 		TR({
 			c : tabTitleGroup = TD({
 				style : {
-					height : 27
+					height : 27,
+					userSelect : 'none',
+					MozUserSelect : 'none'
 				}
 			})
 		}).appendTo(self);
@@ -45,6 +47,9 @@ SkyDesktop.TabGroup = CLASS({
 		let content;
 		TR({
 			c : content = TD({
+				style : {
+					height : '100%'
+				},
 				c : homeTab
 			})
 		}).appendTo(self);

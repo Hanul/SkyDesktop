@@ -11,7 +11,9 @@ SkyDesktop.File = CLASS({
 				marginLeft : 20,
 				padding : '2px 5px',
 				cursor : 'default',
-				whiteSpace : 'nowrap'
+				whiteSpace : 'nowrap',
+				userSelect : 'none',
+				MozUserSelect : 'none'
 			},
 			icon : IMG({
 				src : SkyDesktop.R('file.png')
