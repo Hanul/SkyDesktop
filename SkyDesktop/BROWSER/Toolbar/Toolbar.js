@@ -55,6 +55,13 @@ SkyDesktop.Toolbar = CLASS({
 			resize();
 		};
 		
+		let removeButton = self.removeButton = (button) => {
+			
+			button.remove();
+			
+			resize();
+		};
+		
 		if (params !== undefined && params.buttons !== undefined) {
 			EACH(params.buttons, addButton);
 		}

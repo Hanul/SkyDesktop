@@ -56,17 +56,20 @@ SkyDesktop.TabGroup = CLASS({
 		
 		let activeTab = self.activeTab = (tabIndex) => {
 			
-			activeTabIndex = tabIndex;
-			
 			EACH(tabTitles, (tabTitle) => {
 				tabTitle.addStyle({
 					backgroundColor : 'transparent'
 				});
 			});
 			
-			EACH(tabs, (tab) => {
+			EACH(tabs, (tab, i) => {
 				tab.hide();
+				if (i === activeTabIndex) {
+					tab.fireEvent('deactive');
+				}
 			});
+			
+			activeTabIndex = tabIndex;
 			
 			tabTitles[tabIndex].addStyle({
 				backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#000' : '#fff'
