@@ -200,7 +200,9 @@ SkyDesktop.HorizontalTabList = CLASS({
 		
 		self.on('show', resizeTabsSize);
 		
-		DELAY(resizeTabsSize);
+		DELAY(0.1, () => {
+			resizeTabsSize();
+		});
 		
 		let resizeEvent = EVENT('resize', resizeTabsSize);
 		
