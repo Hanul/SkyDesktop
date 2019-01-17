@@ -146,6 +146,8 @@ SkyDesktop.HorizontalTabList = CLASS({
 									
 									touchendEvent.remove();
 									touchendEvent = undefined;
+									
+									EVENT.fireAll('resize');
 								});
 							}
 							
@@ -205,7 +207,9 @@ SkyDesktop.HorizontalTabList = CLASS({
 			resizeTabsSize();
 		});
 		
-		DELAY(resizeTabsSize);
+		DELAY(0.1, () => {
+			resizeTabsSize();
+		});
 		
 		let resizeEvent = EVENT('resize', resizeTabsSize);
 		

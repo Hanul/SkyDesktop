@@ -123,6 +123,8 @@ SkyDesktop.VerticalTabList = CLASS({
 								
 								touchendEvent.remove();
 								touchendEvent = undefined;
+								
+								EVENT.fireAll('resize');
 							});
 							
 							e.stop();
@@ -168,7 +170,7 @@ SkyDesktop.VerticalTabList = CLASS({
 			resizeTabsSize();
 		});
 		
-		DELAY(resizeTabsSize);
+		resizeTabsSize();
 		
 		let resizeEvent = EVENT('resize', resizeTabsSize);
 		
