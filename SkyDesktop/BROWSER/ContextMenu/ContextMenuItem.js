@@ -1,7 +1,7 @@
 SkyDesktop.ContextMenuItem = CLASS({
 
 	preset : () => {
-		return UUI.BUTTON_H;
+		return DIV;
 	},
 
 	params : () => {
@@ -9,9 +9,9 @@ SkyDesktop.ContextMenuItem = CLASS({
 		return {
 			style : {
 				padding : '5px 15px',
-				minWidth : 200
+				minWidth : 200,
+				cursor : 'pointer'
 			},
-			spacing : 10,
 			on : {
 				mouseover : (e, self) => {
 					self.addStyle({
@@ -25,5 +25,20 @@ SkyDesktop.ContextMenuItem = CLASS({
 				}
 			}
 		};
+	},
+	
+	init : (inner, self, params) => {
+		//REQUIRED: params
+		//OPTIONAL: params.icon
+		//OPTIONAL: params.title
+		
+		let icon = params.icon;
+		let title = params.title;
+		
+		self.append(UUI.BUTTON_H({
+			icon : icon,
+			spacing : 10,
+			title : title
+		}));
 	}
 });
