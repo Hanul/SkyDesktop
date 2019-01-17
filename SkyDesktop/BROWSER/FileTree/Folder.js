@@ -22,7 +22,8 @@ SkyDesktop.Folder = CLASS({
 			icon : IMG({
 				src : SkyDesktop.R('folder.png')
 			}),
-			spacing : 5
+			spacing : 5,
+			isToFixWrapperSize : true
 		};
 	},
 	

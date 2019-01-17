@@ -15,6 +15,7 @@ SkyDesktop.Button = CLASS({
 				borderRadius : 4
 			},
 			spacing : 10,
+			isToFixWrapperSize : true,
 			on : {
 				mouseover : (e, self) => {
 					self.addStyle({
@@ -28,14 +29,5 @@ SkyDesktop.Button = CLASS({
 				}
 			}
 		};
-	},
-	
-	init : (inner, self) => {
-		
-		self.on('show', () => {
-			DELAY(() => {
-				self.resize();
-			});
-		});
 	}
 });
