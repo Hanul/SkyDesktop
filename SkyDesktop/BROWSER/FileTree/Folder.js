@@ -183,8 +183,6 @@ SkyDesktop.Folder = CLASS({
 
 			list.addItem(params);
 			sortItems();
-			
-			EVENT.fireAll('resize');
 		};
 
 		if (params !== undefined && params.items !== undefined) {

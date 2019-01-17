@@ -79,8 +79,6 @@ SkyDesktop.TabGroup = CLASS({
 			
 			tabs[tabIndex].fireEvent('active');
 			
-			EVENT.fireAll('resize');
-			
 			history.push(tabs[tabIndex]);
 		};
 		
@@ -363,8 +361,6 @@ SkyDesktop.TabGroup = CLASS({
 			tabs.push(tab);
 			
 			activeTab(tabs.length - 1);
-			
-			EVENT.fireAll('resize');
 			
 			tab.on('remove', () => {
 				

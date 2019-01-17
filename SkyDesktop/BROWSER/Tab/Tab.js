@@ -62,8 +62,6 @@ SkyDesktop.Tab = CLASS({
 			//REQUIRED: size
 			
 			size = _size;
-			
-			EVENT.fireAll('resize');
 		};
 		
 		let getSize = self.getSize = () => {
@@ -73,9 +71,5 @@ SkyDesktop.Tab = CLASS({
 		let checkIsCannotClose = self.checkIsCannotClose = () => {
 			return isCannotClose;
 		};
-		
-		self.on('remove', () => {
-			EVENT.fireAll('resize');
-		});
 	}
 });

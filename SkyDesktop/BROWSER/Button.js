@@ -28,5 +28,14 @@ SkyDesktop.Button = CLASS({
 				}
 			}
 		};
+	},
+	
+	init : (inner, self) => {
+		
+		self.on('show', () => {
+			DELAY(() => {
+				self.resize();
+			});
+		});
 	}
 });

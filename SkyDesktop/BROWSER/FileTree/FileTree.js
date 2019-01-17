@@ -59,8 +59,6 @@ SkyDesktop.FileTree = CLASS({
 				
 				origin(params);
 				sortItems();
-				
-				EVENT.fireAll('resize');
 			};
 		});
 		
