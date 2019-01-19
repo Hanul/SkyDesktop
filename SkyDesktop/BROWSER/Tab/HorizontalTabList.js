@@ -1,7 +1,7 @@
 SkyDesktop.HorizontalTabList = CLASS({
 	
 	preset : () => {
-		return DIV;
+		return TABLE;
 	},
 	
 	params : () => {
@@ -17,10 +17,11 @@ SkyDesktop.HorizontalTabList = CLASS({
 		//OPTIONAL: params
 		//OPTIONAL: params.tabs
 		
-		let tabs = [];
-		let dividers = [];
+		let tr = TR().appendTo(self);
 		
-		let clearBoth = CLEAR_BOTH();
+		let tabs = [];
+		let tds = [];
+		let dividers = [];
 		
 		let resizeTabsSize = () => {
 			
@@ -33,123 +34,133 @@ SkyDesktop.HorizontalTabList = CLASS({
 				} else {
 					totalSize += tab.getSize();
 				}
-				
-				tab.addStyle({
-					width : 0,
-					height : 0
-				});
 			});
-			
-			EACH(dividers, (divider) => {
-				divider.addStyle({
-					height : 0
-				});
-			});
-			
-			let listHeight = self.getHeight();
 			
 			let avgSize = totalSize / (tabs.length - noSizeCount);
 			
 			totalSize += avgSize * noSizeCount;
 			
-			EACH(tabs, (tab) => {
+			EACH(tabs, (tab, i) => {
 				
-				if (tab.getSize() === undefined) {
-					tab.setSize(avgSize);
-				}
-				
-				tab.addStyle({
-					width : (self.getWidth() - (tabs.length - 1) * 8) * tab.getSize() / totalSize,
-					height : listHeight
+				tds[i].addStyle({
+					width : ((tab.getSize() === undefined ? avgSize : tab.getSize()) / totalSize * 100) + '%'
 				});
 			});
 			
-			EACH(dividers, (divider) => {
+			EACH(dividers, (divider, i) => {
+				
 				divider.addStyle({
-					height : listHeight
+					left : tds[i].getLeft() + tds[i].getWidth(),
+					top : self.getTop(),
+					height : self.getHeight()
+				});
+				
+				DELAY(() => {
+					divider.addStyle({
+						left : tds[i].getLeft() + tds[i].getWidth(),
+						top : self.getTop(),
+						height : self.getHeight()
+					});
 				});
 			});
 		};
 		
 		let addTab = self.addTab = (tab) => {
 			
+			tabs.push(tab);
+			
+			let td;
+			
+			tr.append(td = TD({
+				style : {
+					height : '100%'
+				},
+				c : tab
+			}));
+			
+			tds.push(td);
+			
 			let divider;
 			
-			if (tabs.length > 0) {
+			if (tabs.length > 1) {
 				
-				let beforeTab = tabs[tabs.length - 1];
+				tab.addStyle({
+					marginLeft : 6
+				});
+				
+				let beforeTab = tabs[tabs.length - 2];
+				let beforeTd = tds[tds.length - 2];
 				
 				let touchmoveEvent;
 				let touchendEvent;
 				
-				// create divider.
 				self.append(divider = DIV({
 					style : {
-						flt : 'left',
-						width : 8,
-						height : '100%',
-						cursor : 'e-resize'
+						position : 'absolute',
+						top : 0,
+						width : 6,
+						cursor : 'e-resize',
+						backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#333' : '#ccc'
 					},
 					on : {
 						touchstart : (e) => {
 							
-							if (beforeTab.getSize() > 0 && tab.getSize() > 0) {
+							let startLeft = e.getLeft();
+							let beforeTdOriginWidth = beforeTd.getWidth();
+							let tdOriginWidth = td.getWidth();
+							
+							BODY.addStyle({
+								cursor : 'e-resize'
+							});
+							
+							if (touchmoveEvent !== undefined) {
+								touchmoveEvent.remove();
+							}
+							
+							touchmoveEvent = EVENT('touchmove', (e) => {
+								let diff = e.getLeft() - startLeft;
 								
-								let startLeft = e.getLeft();
-								let beforeTabOriginWidth = beforeTab.getWidth();
-								let tabOriginWidth = tab.getWidth();
+								if (beforeTdOriginWidth + diff < 100) {
+									diff = 100 - beforeTdOriginWidth;
+								}
+								
+								if (tdOriginWidth - diff < 100) {
+									diff = tdOriginWidth - 100;
+								}
+								
+								beforeTd.addStyle({
+									width : beforeTdOriginWidth + diff
+								});
+								
+								td.addStyle({
+									width : tdOriginWidth - diff
+								});
+								
+								divider.addStyle({
+									left : beforeTd.getLeft() + beforeTd.getWidth()
+								});
+							});
+							
+							if (touchendEvent !== undefined) {
+								touchendEvent.remove();
+							}
+							
+							touchendEvent = EVENT('touchend', () => {
 								
 								BODY.addStyle({
-									cursor : 'e-resize'
+									cursor : 'auto'
 								});
 								
-								if (touchmoveEvent !== undefined) {
-									touchmoveEvent.remove();
-								}
+								beforeTab.setSize(beforeTab.getSize() * beforeTd.getWidth() / beforeTdOriginWidth);
 								
-								touchmoveEvent = EVENT('touchmove', (e) => {
-									let diff = e.getLeft() - startLeft;
-									
-									if (beforeTabOriginWidth + diff < 100) {
-										diff = 100 - beforeTabOriginWidth;
-									}
-									
-									if (tabOriginWidth - diff < 100) {
-										diff = tabOriginWidth - 100;
-									}
-									
-									beforeTab.addStyle({
-										width : beforeTabOriginWidth + diff
-									});
-									
-									tab.addStyle({
-										width : tabOriginWidth - diff
-									});
-								});
+								tab.setSize(tab.getSize() * td.getWidth() / tdOriginWidth);
 								
-								if (touchendEvent !== undefined) {
-									touchendEvent.remove();
-								}
+								touchmoveEvent.remove();
+								touchmoveEvent = undefined;
 								
-								touchendEvent = EVENT('touchend', () => {
-									
-									BODY.addStyle({
-										cursor : 'auto'
-									});
-									
-									beforeTab.setSize(beforeTab.getSize() * beforeTab.getWidth() / beforeTabOriginWidth);
-									
-									tab.setSize(tab.getSize() * tab.getWidth() / tabOriginWidth);
-									
-									touchmoveEvent.remove();
-									touchmoveEvent = undefined;
-									
-									touchendEvent.remove();
-									touchendEvent = undefined;
-									
-									EVENT.fireAll('resize');
-								});
-							}
+								touchendEvent.remove();
+								touchendEvent = undefined;
+							});
 							
 							e.stop();
 						}
@@ -159,23 +170,19 @@ SkyDesktop.HorizontalTabList = CLASS({
 				dividers.push(divider);
 			}
 			
-			tab.addStyle({
-				flt : 'left'
-			});
-			
-			self.append(tab);
-			self.append(clearBoth);
-			
-			tabs.push(tab);
-			
-			resizeTabsSize();
-			
 			tab.on('remove', () => {
 				
 				REMOVE({
 					array : tabs,
 					value : tab
 				});
+				
+				REMOVE({
+					array : tds,
+					value : td
+				});
+				
+				td.remove();
 				
 				if (divider !== undefined) {
 					
@@ -187,29 +194,15 @@ SkyDesktop.HorizontalTabList = CLASS({
 					divider.remove();
 				}
 				
-				tab = undefined;
-				divider = undefined;
-				
 				resizeTabsSize();
 			});
+			
+			resizeTabsSize();
 		};
 		
 		if (params !== undefined && params.tabs !== undefined) {
 			EACH(params.tabs, addTab);
 		}
-		
-		self.on('show', () => {
-			
-			EACH(tabs, (tab) => {
-				tab.fireEvent('show');
-			});
-			
-			resizeTabsSize();
-		});
-		
-		DELAY(0.1, () => {
-			resizeTabsSize();
-		});
 		
 		let resizeEvent = EVENT('resize', resizeTabsSize);
 		
@@ -217,6 +210,8 @@ SkyDesktop.HorizontalTabList = CLASS({
 			resizeEvent.remove();
 			resizeEvent = undefined;
 		});
+		
+		self.on('show', resizeTabsSize);
 		
 		let getAllTabs = self.getAllTabs = () => {
 			return tabs;

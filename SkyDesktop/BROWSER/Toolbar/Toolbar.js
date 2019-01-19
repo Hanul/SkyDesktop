@@ -68,8 +68,6 @@ SkyDesktop.Toolbar = CLASS({
 		
 		self.on('show', resize);
 		
-		DELAY(resize);
-		
 		let resizeEvent = EVENT('resize', resize);
 		
 		self.on('remove', () => {
