@@ -66,14 +66,6 @@ SkyDesktop.HorizontalTabList = CLASS({
 					top : self.getTop(),
 					height : self.getHeight()
 				});
-				
-				DELAY(() => {
-					divider.addStyle({
-						left : tds[i].getLeft() + tds[i].getWidth(),
-						top : self.getTop(),
-						height : self.getHeight()
-					});
-				});
 			});
 		};
 		

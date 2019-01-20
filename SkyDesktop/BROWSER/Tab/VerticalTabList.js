@@ -65,14 +65,6 @@ SkyDesktop.VerticalTabList = CLASS({
 					top : tds[i].getTop() + tds[i].getHeight(),
 					width : self.getWidth()
 				});
-				
-				DELAY(() => {
-					divider.addStyle({
-						left : self.getLeft(),
-						top : tds[i].getTop() + tds[i].getHeight(),
-						width : self.getWidth()
-					});
-				});
 			});
 		};
 		
