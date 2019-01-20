@@ -24,6 +24,14 @@ SkyDesktop.HorizontalTabList = CLASS({
 		let dividers = [];
 		
 		let resizeTabsSize = () => {
+
+			EACH(tds, (td) => {
+				td.addStyle({
+					width : 0
+				});
+			});
+			
+			let totalWidth = self.getWidth();
 			
 			let totalSize = 0;
 			let noSizeCount = 0;
@@ -42,8 +50,12 @@ SkyDesktop.HorizontalTabList = CLASS({
 			
 			EACH(tabs, (tab, i) => {
 				
+				let width = totalWidth * (tab.getSize() === undefined ? avgSize : tab.getSize()) / totalSize;
+				
+				tab.setToWidth(width);
+				
 				tds[i].addStyle({
-					width : ((tab.getSize() === undefined ? avgSize : tab.getSize()) / totalSize * 100) + '%'
+					width : width
 				});
 			});
 			
@@ -132,9 +144,13 @@ SkyDesktop.HorizontalTabList = CLASS({
 									width : beforeTdOriginWidth + diff
 								});
 								
+								beforeTab.setToWidth(beforeTdOriginWidth + diff);
+								
 								td.addStyle({
 									width : tdOriginWidth - diff
 								});
+								
+								tab.setToWidth(tdOriginWidth - diff);
 								
 								divider.addStyle({
 									left : beforeTd.getLeft() + beforeTd.getWidth()

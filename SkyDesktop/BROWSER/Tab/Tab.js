@@ -8,7 +8,6 @@ SkyDesktop.Tab = CLASS({
 		return {
 			style : {
 				height : '100%',
-				overflow : 'auto',
 				backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#000' : '#fff',
 				color : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#fff' : '#000'
 			}
@@ -33,6 +32,9 @@ SkyDesktop.Tab = CLASS({
 			size = params.size;
 			isCannotClose = params.isCannotClose;
 		}
+
+		let toWidth;
+		let toHeight;
 		
 		let setIcon = self.setIcon = (_icon) => {
 			//REQUIRED: icon
@@ -62,6 +64,9 @@ SkyDesktop.Tab = CLASS({
 			//REQUIRED: size
 			
 			size = _size;
+			
+			// TabList의 크기 Fix
+			EVENT.fireAll('resize');
 		};
 		
 		let getSize = self.getSize = () => {
@@ -70,6 +75,30 @@ SkyDesktop.Tab = CLASS({
 		
 		let checkIsCannotClose = self.checkIsCannotClose = () => {
 			return isCannotClose;
+		};
+		
+		let setToWidth = self.setToWidth = (_toWidth) => {
+			//REQUIRED: toWidth
+			
+			toWidth = _toWidth;
+
+			self.fireEvent('settowidth');
+		};
+		
+		let getToWidth = self.getToWidth = () => {
+			return toWidth;
+		};
+		
+		let setToHeight = self.setToHeight = (_toHeight) => {
+			//REQUIRED: toHeight
+			
+			toHeight = _toHeight;
+
+			self.fireEvent('settoheight');
+		};
+		
+		let getToHeight = self.getToHeight = () => {
+			return toHeight;
 		};
 	}
 });

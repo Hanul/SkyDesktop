@@ -23,6 +23,14 @@ SkyDesktop.VerticalTabList = CLASS({
 		let dividers = [];
 		
 		let resizeTabsSize = () => {
+
+			EACH(tds, (td) => {
+				td.addStyle({
+					height : 0
+				});
+			});
+			
+			let totalHeight = self.getHeight();
 			
 			let totalSize = 0;
 			let noSizeCount = 0;
@@ -41,8 +49,12 @@ SkyDesktop.VerticalTabList = CLASS({
 			
 			EACH(tabs, (tab, i) => {
 				
+				let height = totalHeight * (tab.getSize() === undefined ? avgSize : tab.getSize()) / totalSize;
+				
+				tab.setToHeight(height);
+				
 				tds[i].addStyle({
-					height : ((tab.getSize() === undefined ? avgSize : tab.getSize()) / totalSize * 100) + '%'
+					height : height
 				});
 			});
 			
@@ -135,9 +147,13 @@ SkyDesktop.VerticalTabList = CLASS({
 									height : beforeTdOriginHeight + diff
 								});
 								
+								beforeTab.setToHeight(beforeTdOriginHeight + diff);
+								
 								td.addStyle({
 									height : tdOriginHeight - diff
 								});
+								
+								tab.setToHeight(tdOriginHeight - diff);
 								
 								divider.addStyle({
 									top : beforeTd.getTop() + beforeTd.getHeight()
