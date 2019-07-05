@@ -7,8 +7,7 @@ SkyDesktop.VerticalTabList = CLASS({
 	params : () => {
 		return {
 			style : {
-				height : '100%',
-				backgroundColor : BROWSER_CONFIG.SkyDesktop !== undefined && BROWSER_CONFIG.SkyDesktop.theme === 'dark' ? '#333' : '#ccc'
+				height : '100%'
 			}
 		};
 	},

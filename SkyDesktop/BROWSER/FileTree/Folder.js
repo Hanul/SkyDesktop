@@ -30,17 +30,20 @@ SkyDesktop.Folder = CLASS({
 	init : (inner, self, params) => {
 		//OPTIONAL: params
 		//OPTIONAL: params.listStyle
-		//OPTIONAL: params.isOpened
 		//OPTIONAL: params.path
+		//OPTIONAL: params.isOpened
+		//OPTIONAL: params.isToNotSort
 		
 		let listStyle;
-		let isOpened;
 		let path;
+		let isOpened;
+		let isToNotSort;
 		
 		if (params !== undefined) {
 			listStyle = params.listStyle;
-			isOpened = params.isOpened;
 			path = params.path;
+			isOpened = params.isOpened;
+			isToNotSort = params.isToNotSort;
 		}
 		
 		let load;
@@ -183,7 +186,10 @@ SkyDesktop.Folder = CLASS({
 			}
 
 			list.addItem(params);
-			sortItems();
+			
+			if (isToNotSort !== true) {
+				sortItems();
+			}
 		};
 
 		if (params !== undefined && params.items !== undefined) {
@@ -210,7 +216,10 @@ SkyDesktop.Folder = CLASS({
 			//REQUIRED: key
 
 			list.removeItem(key);
-			sortItems();
+			
+			if (isToNotSort !== true) {
+				sortItems();
+			}
 		};
 		
 		let removeAllItems = self.removeAllItems = () => {

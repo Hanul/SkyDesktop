@@ -13,8 +13,21 @@ SkyDesktop.FileTree = CLASS({
 		};
 	},
 	
-	init : (inner, self, load) => {
+	init : (inner, self, params, load) => {
+		//OPTIONAL: params
+		//OPTIONAL: params.isToNotSort
 		//REQUIRED: load
+		
+		let isToNotSort;
+		
+		if (load === undefined) {
+			load = params;
+			params = undefined;
+		}
+		
+		if (params !== undefined) {
+			isToNotSort = params.isToNotSort;
+		}
 
 		let sortItems = () => {
 			self.sortItems((a, b) => {
@@ -58,7 +71,10 @@ SkyDesktop.FileTree = CLASS({
 				}
 				
 				origin(params);
-				sortItems();
+				
+				if (isToNotSort !== true) {
+					sortItems();
+				}
 			};
 		});
 		
@@ -69,7 +85,10 @@ SkyDesktop.FileTree = CLASS({
 				//REQUIRED: key
 				
 				origin(key);
-				sortItems();
+				
+				if (isToNotSort !== true) {
+					sortItems();
+				}
 			};
 		});
 	}
